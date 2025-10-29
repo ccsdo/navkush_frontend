@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Search, Download, Eye, Filter, Calendar, Mail, Phone, User, Building, FileText, ChevronDown, ChevronUp, RefreshCw } from 'lucide-react';
-
+import { useNavigate } from 'react-router-dom';
 const Admin = () => {
   const [activeTab, setActiveTab] = useState('careerForms');
   const [searchTerm, setSearchTerm] = useState('');
@@ -8,22 +8,35 @@ const Admin = () => {
   const [loading, setLoading] = useState(true);
   const [expandedRows, setExpandedRows] = useState({});
   const [dateFilter, setDateFilter] = useState('all');
-
+const Navigate = useNavigate();
   // Fetch data from API
   useEffect(() => {
+        const token = localStorage.getItem("adminToken");
+        // console.log("Token:", token); // Debugging line
+    if (!token) {
+      Navigate("/adminLogin");
+    }
+
+
     fetchData();
   }, []);
 
+
+  const handleLogOut = () => {
+    localStorage.removeItem("adminToken");
+    Navigate("/12/13/adminLogin");
+  }
   const fetchData = async () => {
     setLoading(true);
     try {
-      // Replace with your actual API endpoint
+    //  console.log("Fetching data from API...");
       const response = await fetch(`${import.meta.env.VITE_API_URL}/v1/v2/vz/api/forms/all`);
       const jsonData = await response.json();
+
       setData(jsonData);
     } catch (error) {
       console.error('Error fetching data:', error);
-      // Using mock data for demonstration
+
       setData(getMockData());
     } finally {
       setLoading(false);
@@ -43,7 +56,7 @@ const Admin = () => {
       sponsorshipForms:["no data in database"],
       volunteerForms:["no data in database"],
       volunteeringForms:["no data in database"],
-  });
+  }); 
 
   const formCategories = [
     { key: 'careerForms', label: 'Career Applications',  },
@@ -131,13 +144,13 @@ const Admin = () => {
     const isExpanded = expandedRows[item._id];
 
     return (
-      <div key={item._id} className="bg-white rounded-lg shadow-sm border border-gray-200 mb-3 overflow-hidden hover:shadow-md transition-shadow">
+      <div key={item._id} className="bg-white rounded-lg shadow-xl border border-gray-200 mb-3 overflow-hidden hover:shadow-md transition-shadow">
         <div className="p-4">
           <div className="flex items-start justify-between mb-2">
             <div className="flex-1">
               <h3 className="font-semibold text-gray-900 text-lg flex items-center gap-2">
                 <User size={18} className="text-blue-600" />
-                {item.name || item.fullName || item.company || 'N/A'}
+                {item.name || item.fullName || item.company || item.organizationName || 'N/A'}
               </h3>
               <div className="flex flex-wrap gap-3 mt-2 text-sm text-gray-600">
                 <span className="flex items-center gap-1">
@@ -193,7 +206,7 @@ const Admin = () => {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
+      <div className="min-h-screen bg-gray-50 flex items-center justify-center p-4 animate-fade-in purple-pulse">
         <div className="text-center">
           <RefreshCw className="animate-spin mx-auto mb-4" size={40} />
           <p className="text-gray-600">Loading dashboard...</p>
@@ -208,16 +221,24 @@ const Admin = () => {
   return (
     <div className="min-h-screen bg-gray-50">
       {/* Header */}
+      
       <div className="bg-white shadow-sm border-b sticky top-0 z-10">
         <div className="max-w-7xl mx-auto px-4 py-4">
           <div className="flex items-center justify-between mb-4">
             <h1 className="text-2xl font-bold text-gray-900">Admin Dashboard</h1>
+            
             <button
               onClick={fetchData}
               className="flex items-center gap-2 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
             >
               <RefreshCw size={18} />
               Refresh
+            </button>
+            <button
+              onClick={handleLogOut}
+              className="flex items-center gap-2 px-4 py-2 bg-red-600 text-white rounded-2xl hover:bg-red-700 transition-colors"
+            >
+              Log Out
             </button>
           </div>
 
