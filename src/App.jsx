@@ -117,6 +117,7 @@ const Career = React.lazy(() => import('./components/Career'));
 import award from "./assets/award.jpg"
 import award1 from "./assets/child development.jpg"
 import AdminLogin from './pages/AdminLogin.jsx';
+import NotFound from './components/NotFound.jsx';
 export default function App() {
   return (
     <>
@@ -258,7 +259,7 @@ export default function App() {
           />
           <Route path="/12/13/admin" element={<Admin />} />
           <Route path="/12/13/adminLogin" element={<AdminLogin />} />
-          <Route path="*" element={<Home />} />
+          <Route path="*" element={<NotFound />} />
         </Routes>
 
       <Footer />

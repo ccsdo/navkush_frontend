@@ -98,18 +98,7 @@ function Contact() {
 
     setSubmitting(true);
 
-      setFormStatus({
-        type: "success",
-        message: "Thank you for your message! We'll get back to you soon."
-      });
-      setForm({
-        name: "",
-        email: "",
-        phone: "",
-        subject: "",
-        message: ""
-      });
-      setSubmitting(false);
+
       // Log form data (simulate API)
       // eslint-disable-next-line no-console
       try {
@@ -141,7 +130,18 @@ function Contact() {
     // alert(errorMessage);
     throw new Error(errorMessage);
   }
-
+      setFormStatus({
+        type: "success",
+        message: "Thank you for your message! We'll get back to you soon."
+      });
+      setForm({
+        name: "",
+        email: "",
+        phone: "",
+        subject: "",
+        message: ""
+      });
+      setSubmitting(false);
   // console.log("Form submitted successfully:", data);
   // setShowModal(true);
     } catch (err) {

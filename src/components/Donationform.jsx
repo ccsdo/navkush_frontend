@@ -4,120 +4,109 @@ import {useNavigate} from "react-router-dom"
 // Main App component
 export default function App() {
   const navigate = useNavigate()
-  // State variables for the donation form
-  const[formdata,setFormdata]=useState({});
-  const [amount, setAmount] = useState(5000);
-  const [name, setName] = useState('');
-  const [email, setEmail] = useState('');
-  const [phone, setPhone] = useState('');
-  // New state variables for the added fields
-  const [panNo, setPanNo] = useState('');
-  const [address, setAddress] = useState('');
-  const [city, setCity] = useState('');
-  const [state, setState] = useState('');
-  const [pincode, setPincode] = useState('');
-  const [dob, setDob] = useState(''); // Added state for Date of Birth
 
-  const [showModal, setShowModal] = useState(false);
-  const [modalMessage, setModalMessage] = useState('');
+// State variables for the donation form
+const [amount, setAmount] = useState(5000);
+const [name, setName] = useState('');
+const [email, setEmail] = useState('');
+const [phone, setPhone] = useState('');
+const [panNo, setPanNo] = useState('');
+const [address, setAddress] = useState('');
+const [city, setCity] = useState('');
+const [state, setState] = useState('');
+const [pincode, setPincode] = useState('');
+const [dob, setDob] = useState('');
 
-  // Function to handle donation amount selection from preset buttons
-  const handleSelectAmount = (selectedAmount) => {
-    setAmount(selectedAmount);
-  };
+const [showModal, setShowModal] = useState(false);
+const [modalMessage, setModalMessage] = useState('');
+const [loading, setLoading] = useState(false);
 
-  // Function to update the amount from the custom input field
-  const handleCustomAmountChange = (e) => {
-    const value = parseInt(e.target.value) || 0;
-    setAmount(value);
-  };
+// Select preset amount
+const handleSelectAmount = (selectedAmount) => setAmount(selectedAmount);
 
-  // Logic to determine the impact message based on the donation amount
-  const getImpactMessage = () => {
-    if (amount >= 10000) {
-      return 'Provide education support for 20 children for a month';
-    }
-    if (amount >= 5000) {
-      return 'Provide education support for 10 children for a month';
-    }
-    if (amount >= 2500) {
-      return 'Provide nutrition support for 5 children for a month';
-    }
-    if (amount >= 1000) {
-      return 'Provide healthcare support for 2 children for a month';
-    }
-    return 'Every rupee makes a difference in a child\'s life';
-  };
-useEffect(() => {  
-  const sendFormData = async () => {
-    // console.log("1:",formdata)
-    try {
-      const res = await fetch(`${import.meta.env.VITE_API_URL}/v1/v2/vz/api/forms/donation`, {
+// Custom amount input
+const handleCustomAmountChange = (e) => {
+  const value = parseInt(e.target.value) || 0;
+  setAmount(value);
+};
+
+// Impact text
+const getImpactMessage = () => {
+  if (amount >= 10000) return 'Provide education support for 20 children for a month';
+  if (amount >= 5000) return 'Provide education support for 10 children for a month';
+  if (amount >= 2500) return 'Provide nutrition support for 5 children for a month';
+  if (amount >= 1000) return 'Provide healthcare support for 2 children for a month';
+  return "Every rupee makes a difference in a child's life";
+};
+
+// Submit to backend
+const sendFormData = async (payload) => {
+  try {
+    const res = await fetch(
+      `${import.meta.env.VITE_API_URL}/v1/v2/vz/api/forms/donation`,
+      {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(formdata),
-      });
-
-     const data = await res.json();
-
-    //  console.log("Response data:", res);
-
-  if (!res.ok) {
-    let errorMessage = "Something went wrong";
-
-    if (data?.error?.name === "ZodError" && data?.error?.message) {
-      try {
-        const parsedErrors = JSON.parse(data.error.message);
-        // Extract all Zod messages
-        errorMessage = parsedErrors.map(err => err.message).join("\n");
-      } catch (e) {
-        errorMessage = data.error.message;
+        body: JSON.stringify(payload),
       }
-    } else if (data?.message) {
-      errorMessage = data.message;
+    );
+
+    const data = await res.json();
+
+    if (!res.ok) {
+      let errorMessage = data?.message || "Something went wrong";
+
+      if (data?.error?.name === "ZodError") {
+        try {
+          const parsedErrors = JSON.parse(data.error.message);
+          errorMessage = parsedErrors.map(err => err.message).join("\n");
+        } catch {
+          errorMessage = data.error.message;
+        }
+      }
+
+      throw new Error(errorMessage);
     }
 
-    alert(errorMessage);
-    throw new Error(errorMessage);
+    return true;
+  } catch (err) {
+    alert("Error: " + err.message);
+    return null;
+  }
+};
+
+// Handle form submit
+const handleSubmit = async (e) => {
+  e.preventDefault();
+
+  if (!name || !email || !phone || !panNo || !address || !city || !state || !pincode || !dob) {
+    setModalMessage("Please fill in all required fields.");
+    setShowModal(true);
+    return;
   }
 
-  // console.log("Form submitted successfully:", data);
+  if (amount < 100) {
+    setModalMessage("Minimum donation amount is ₹100.");
+    setShowModal(true);
+    return;
+  }
+
+  const payload = { name, email, phone, panNo, address, city, state, pincode, dob, amount };
+
+  setLoading(true);
+  const result = await sendFormData(payload);
+  setLoading(false);
+
+  if (!result) return;
+
+  setModalMessage(
+    `Thank you ${name}! Your donation of ₹${amount} will make a real difference. A tax receipt will be sent to ${email}.`
+  );
   setShowModal(true);
-    } catch (err) {
-      // console.log("catch"+err);
-      console.error("Error sending form data:", err);
-      alert('Error: ' + (err.message || 'Unable to process donation'));
-    }
-  };
-  // console.log("formdata", formdata);
-  if(formdata.name && formdata.email && formdata.phone && formdata.panNo && formdata.address && formdata.city && formdata.state && formdata.pincode && formdata.dob) 
-  sendFormData();
-}, [formdata]);
-  // Function to handle the form submission
-  const handleSubmit = (e) => {
-    e.preventDefault();
 
-    // Basic validation for all required fields, including the new DOB field
-    if (!name || !email || !phone || !panNo || !address || !city || !state || !pincode || !dob) {
-      setModalMessage('Please fill in all required fields.');
-      setShowModal(true);
-      return;
-    }
+  navigate("/donate");
+};
 
-    if (amount < 100) {
-      setModalMessage('Minimum donation amount is ₹100.');
-      setShowModal(true);
-      return;
-    }
-    setFormdata({"name":name,"email":email,"phone":phone,"dob":dob,"panNo":panNo,"state":state,"city":city,"address":address,"pincode":pincode,"amount":amount});
-    
-    // Here you would typically handle the payment processing with Razorpay or another service
-    // Success message logic with new fields
-    navigate("/donate")
-    const message = `Thank you ${name}! Your donation of ₹${amount} will make a real difference in children's lives. A tax receipt will be sent to ${email}. We have recorded your details: PAN No. ${panNo}, DOB: ${dob}, Address: ${address}, City: ${city}, State: ${state}, Pincode: ${pincode}.`;
-    setModalMessage(message);
-    
-  };
 
   return (
     <div className="bg-[#fffdf8] min-h-screen font-[Inter]">
