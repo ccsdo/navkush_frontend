@@ -52,7 +52,7 @@ export default function SocietyChangemaker() {
             <ul className="list-disc list-inside mt-2 text-gray-700">
               <li>
                 <span className="mr-2" role="img" aria-label="diamond">🔸</span>
-                <b>NavvKhush Helping Foundation</b> – Established in October 2023, focusing on child education, women empowerment, skill-building, and ESG (Environment, Social & Governance) projects.
+                <b>NavvKhush Helping Foundation</b> – Established in October 2023, focusing on child education, skill-building, and ESG (Environment, Social & Governance) projects.
               </li>
             </ul>
             <Link
