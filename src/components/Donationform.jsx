@@ -132,7 +132,7 @@ const handleSubmit = async (e) => {
               Who We <span className="text-[#ff6d4d]">Are?</span>
             </h2>
             <p className="text-gray-600 text-sm sm:text-base">
-              Founded in 1979, CRY is India's leading child rights NGO, dedicated to
+              Founded in 2023, Navvkhushhelping is India's leading child rights NGO, dedicated to
               creating meaningful and lasting change in the lives of underprivileged
               children.
             </p>

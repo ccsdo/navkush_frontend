@@ -118,6 +118,7 @@ import award from "./assets/award.jpg"
 import award1 from "./assets/child development.jpg"
 import AdminLogin from './pages/AdminLogin.jsx';
 import NotFound from './components/NotFound.jsx';
+import Loader from './components/Loader.jsx';
 export default function App() {
   return (
     <>
@@ -220,7 +221,7 @@ export default function App() {
           <Route
             path="/volunteer"
             element={
-              <React.Suspense fallback={<div>Loading...</div>}>
+              <React.Suspense fallback={<Loader />}>
                 <Volunteer />
               </React.Suspense>
             }
@@ -228,7 +229,7 @@ export default function App() {
           <Route
             path="/membership"
             element={
-              <React.Suspense fallback={<div>Loading...</div>}>
+              <React.Suspense fallback={<Loader />}>
                 <Membership />
               </React.Suspense>
             }
@@ -236,7 +237,7 @@ export default function App() {
           <Route
             path="/joinngo"
             element={
-              <React.Suspense fallback={<div>Loading...</div>}>
+              <React.Suspense fallback={<Loader />}>
                 <JoinNgo />
               </React.Suspense>
             }
@@ -244,7 +245,7 @@ export default function App() {
           <Route
             path="/internship"
             element={
-              <React.Suspense fallback={<div>Loading...</div>}>
+              <React.Suspense fallback={<Loader />}>
                 <Internship />
               </React.Suspense>
             }
@@ -252,7 +253,7 @@ export default function App() {
           <Route
             path="/career"
             element={
-              <React.Suspense fallback={<div>Loading...</div>}>
+              <React.Suspense fallback={<Loader />}>
                 <Career />
               </React.Suspense>
             }

@@ -8,12 +8,12 @@ const impactData = [
   },
   {
     number: "95%",
-    text: "children in CRY project areas, between the ages of 6–18 years, in school\n*In the 15–18 age group, our enrolment and retention rate is 18% better than the all India enrolment status – GER. (based on the UDISE+ 2023-24 report)",
+    text: "children in Navvkhushhelping project areas, between the ages of 6–18 years, in school\n*In the 15–18 age group, our enrolment and retention rate is 18% better than the all India enrolment status – GER. (based on the UDISE+ 2023-24 report)",
     icon: "/icons/school.png",
   },
   {
     number: "98%",
-    text: "children in CRY project areas, under the age of 5 years, protected from undernourishment\n*Only 2% children in CRY project areas are underweight, as compared to 32% all India status as per NFHS 5",
+    text: "children in Navvkhushhelping project areas, under the age of 5 years, protected from undernourishment\n*Only 2% children in Navvkhushhelping project areas are underweight, as compared to 32% all India status as per NFHS 5",
     icon: "/icons/health.png",
   },
   {
@@ -23,7 +23,7 @@ const impactData = [
   },
   {
     number: "85%",
-    text: "children, in CRY project areas, between the ages of 6–18 years, protected from child labour",
+    text: "children, in Navvkhushhelping project areas, between the ages of 6–18 years, protected from child labour",
     icon: "/icons/health.png",
   },
 ];

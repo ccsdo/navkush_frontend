@@ -1,6 +1,11 @@
-import React from "react";
-
+import React  from "react";
+import { useNavigate } from "react-router-dom";
 export default function TourismCourse() {
+  const navigate = useNavigate();
+
+  const handleClick = () => {
+    navigate("/contact");
+  };
   return (
     <div className="bg-white text-gray-800">
       {/* Header Section */}
@@ -126,7 +131,7 @@ export default function TourismCourse() {
         <p>
           <strong>Email:</strong> info@navvkhushhelping.org
           <br />
-          <strong>Contact:</strong> Contact Form
+          <strong>Contact:</strong> <button className="text-blue-600 underline cursor-pointer" onClick={handleClick}>Contact Form</button> 
           <br />
           Alternatively, visit our website at <strong>navvkhushhelping.org</strong> to learn
           more about the course and fill out the enrollment form.

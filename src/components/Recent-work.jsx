@@ -36,26 +36,20 @@ export default function RecentProjects() {
     {
       title: "Bringing Smiles: Stationery Distribution at MCD Schools",
       description: "We successfully completed a heartwarming project to distribute stationery to children in MCD schools, supporting their educational journey.",
-      image: "/image/our work 6.jpg",
+      image: "/image/our work 7.jpg",
       link: "/stationery-distribution",
     },
     {
-      title: "Content for Website: First Aid Kit Distribution in MCD Schools",
+      title: "Safety in Schools: First Aid Kit Distribution in MCD Schools",
       description: "We are proud to announce the successful completion of our First Aid Kit Distribution Project in MCD schools, ensuring safety and preparedness.",
-      image: "/image/our work 7.jpg",
+      image: "/image/our work 8.jpg",
       link: "/first-aid-kit-distribution",
     },
     {
       title: "EaseMyTrip: Launching Our Free Foundation Course in Tourism - May 2024",
       description: "At Navvkhush Helping, in collaboration with EaseMyTrip, we are dedicated to creating opportunities that open new career paths for youth in tourism.",
-      image: "/image/our work 8.jpg",
+      image: "/image/our work 9.jpg",
       link: "/tourism-course",
-    },
-    {
-      title: "Celebrating Women Empowerment: Kavita Ravat of Navvkhush Helping Foundation Receives Women Achievers Award 2024",
-      description: "In a world where women are breaking barriers and shattering glass ceilings, it is imperative to recognize and celebrate their achievements.",
-      image: "/image/our work 10.jpg",
-      link: "/women-achievers-award",
     },
     {
       title: "Investing in the Future: Navvkhush Helping Foundation's Commitment to Child Development",
